@@ -1,8 +1,11 @@
 FROM python:3.9-alpine
 
-ENV PYTHONUNBUFFERED 1
+# set work directory
+WORKDIR /usr/src/trade
 
-COPY . .
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Install postgres client
 RUN apk add --update --no-cache postgresql-client
@@ -11,14 +14,15 @@ RUN apk add --update --no-cache postgresql-client
 # so that we could avoid installing extra packages to the container
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
 	gcc libc-dev linux-headers postgresql-dev
+
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-# Remove dependencies
-RUN apk del .tmp-build-deps
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
 
-WORKDIR /trade
+COPY . .
 
-# [Security] Limit the scope of user who run the docker image
-RUN adduser -D user
-
-USER user
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/trade/entrypoint.sh"]
