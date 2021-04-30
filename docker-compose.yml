@@ -3,7 +3,7 @@ version: "3.7"
 services:
   trade:
     build:
-      context: .
+      context: ./trade
     ports:
       - "8008:8008"
     restart: always

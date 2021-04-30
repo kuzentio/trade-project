@@ -45,3 +45,7 @@ pids
 *.pid
 *.seed
 *.pid.lock
+
+.env.dev
+.env.prod
+.env.prod.db
