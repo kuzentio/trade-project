@@ -1,7 +1,7 @@
 FROM python:3.9-alpine
 
 # set work directory
-WORKDIR /usr/src/trade
+WORKDIR /usr/src/app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -25,4 +25,4 @@ COPY ./entrypoint.sh .
 COPY . .
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/trade/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
